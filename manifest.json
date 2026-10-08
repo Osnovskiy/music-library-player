@@ -1,0 +1,9 @@
+{
+  "id": "music-library-player",
+  "name": "Music Library Player",
+	"version": "0.1.14",
+  "minAppVersion": "1.5.0",
+	"description": "Play local audio files and optionally stream YouTube videos.",
+  "author": "Music Library Player contributors",
+  "isDesktopOnly": true
+}

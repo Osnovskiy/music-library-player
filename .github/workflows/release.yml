@@ -1,0 +1,37 @@
+name: Build plugin release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Check tag matches plugin version and package assets
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          VERSION=$(node -p "require('./manifest.json').version")
+          if [ "$TAG_NAME" != "$VERSION" ]; then
+            echo "Tag $TAG_NAME must exactly match manifest version $VERSION" >&2
+            exit 1
+          fi
+          zip -j "music-library-player-${VERSION}.zip" main.js manifest.json styles.css
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: gh release create "$TAG_NAME" --title "$TAG_NAME" main.js manifest.json styles.css "music-library-player-${TAG_NAME}.zip"

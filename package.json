@@ -1,0 +1,20 @@
+{
+  "name": "music-library-player",
+	"version": "0.1.14",
+  "private": true,
+  "description": "Desktop music player plugin for Obsidian",
+  "dependencies": {
+    "@electron/remote": "^2.1.2"
+  },
+  "scripts": {
+    "dev": "node esbuild.config.mjs --watch",
+    "build": "tsc --noEmit && node esbuild.config.mjs --production",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.25.0",
+    "obsidian": "latest",
+    "typescript": "^5.8.0"
+  }
+}

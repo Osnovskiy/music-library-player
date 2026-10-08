@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>body { margin: 0; background: #171c26; } .mlp-root { width: 330px; min-height: 300px; }</style>
+<div class="mlp-root" data-appearance="dark" data-palette="vivid">
+  <div class="mlp-queue-row"><select class="mlp-select"><option>Все треки</option></select></div>
+  <div class="mlp-track-status"><input class="mlp-seek-range" type="range" value="35"></div>
+  <div class="mlp-title-row"><button class="mlp-current-title mlp-title-scroll"><span class="mlp-title-marquee"><span class="mlp-title-copy">Полное название музыкальной композиции длиннее сорока символов</span><span class="mlp-title-copy">Полное название музыкальной композиции длиннее сорока символов</span></span></button></div>
+  <div class="mlp-track-row"><button class="mlp-track-title">Полное название музыкальной композиции</button></div>
+</div>
+<script>
+  const marquee = document.querySelector(".mlp-title-marquee");
+  const copy = document.querySelector(".mlp-title-copy");
+  const width = copy.getBoundingClientRect().width;
+  const animation = marquee.animate([{ transform: "translateX(0px)" }, { transform: `translateX(${-width}px)` }], { duration: 8000, iterations: Infinity, easing: "linear" });
+  setTimeout(() => {
+    document.body.dataset.copyWidth = String(width);
+    document.body.dataset.viewportWidth = String(document.querySelector(".mlp-current-title").clientWidth);
+    document.body.dataset.animationTime = String(animation.currentTime);
+    document.body.dataset.animationState = animation.playState;
+    document.body.dataset.animationTransform = getComputedStyle(marquee).transform;
+    document.body.dataset.trackBackground = getComputedStyle(document.querySelector(".mlp-track-title")).backgroundImage;
+    document.body.dataset.trackColor = getComputedStyle(document.querySelector(".mlp-track-title")).color;
+  }, 800);
+</script>
+</html>
